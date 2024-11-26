@@ -7,7 +7,16 @@ public class Token {
 	public static final int TK_NUMBER = 1; // Número (ex.: literais numéricos)
 	public static final int TK_OPERATOR = 2; // Operador (ex.: +, -, *, /)
 	public static final int TK_PONCTUATION = 3; // Pontuação (ex.: vírgulas, pontos, etc.)
-	public static final int TK_ASSIGN = 4; // Operador de atribuição (ex.: =)
+	public static final int TK_RESERVED = 5;
+	public static final int TK_STRING = 6;
+	public static final int TK_DELIMITER = 7;
+	public static final int TK_ARITHMETIC_OPERATOR = 8; // Operador Aritmético (ex.: +, -, *, /)
+	public static final int TK_COMPARISON_OPERATOR = 9; // Operador de Comparação (ex.: ==, !=, <, >)
+	public static final int TK_LOGICAL_OPERATOR = 10;   // Operador Lógico (ex.: &&, ||, !) nao funciona
+	public static final int TK_ASSIGNMENT_OPERATOR = 11; // Operador de Atribuição (ex.: =, +=, -=)
+	public static final int TK_INCREMENT_OPERATOR = 12;  // Operador de Incremento (ex.: ++) nao funciona
+	public static final int TK_DECREMENT_OPERATOR = 13;  // Operador de Decremento (ex.: --) nao funciona
+
 	
 	// Atributos que armazenam o tipo do token e o texto associado a ele.
 	private int type; // Representa o tipo do token usando as constantes acima.
@@ -42,4 +51,9 @@ public class Token {
 	public void setText(String text) { // Define o texto do token.
 		this.text = text;
 	}
+	
+	@Override
+    public String toString() {
+        return "Token [type=" + type + ", text='" + text + "']";
+    }
 }
