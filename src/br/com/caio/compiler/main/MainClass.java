@@ -17,6 +17,12 @@ public class MainClass {
 				}
 			} while (token != null);
 			
+			 System.out.println("\n--- LISTA DOS TOKENS ---");
+	            sc.printTokens();
+
+	            System.out.println("\n--- TABELA DE SÍMBOLOS ---");
+	            sc.printSymbolTable();
+	            
 		} catch(LexicalException ex) {
 			System.out.println("Lexical ERROR " +ex.getMessage());
 			
