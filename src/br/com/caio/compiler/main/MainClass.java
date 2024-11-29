@@ -13,7 +13,6 @@ public class MainClass {
 			do {
 				token = sc.nextToken();
 				if (token != null) {
-					System.out.println(token);
 				}
 			} while (token != null);
 			

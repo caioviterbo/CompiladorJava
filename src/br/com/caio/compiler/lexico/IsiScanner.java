@@ -110,6 +110,7 @@ public class IsiScanner {
 	                term += currentChar;
 	                status = 1;
 	            } else {
+	            	back();
 	                back();
 	                status = 2;
 	            }
@@ -117,6 +118,7 @@ public class IsiScanner {
 	        case 2:
 	            if (isReservedWord(term)) {
 	                token.setType(Token.TK_RESERVED);
+	                addSymbol(term);
 	            } else {
 	                token.setType(Token.TK_IDENTIFIER);
 	                addSymbol(term); // Adiciona à tabela de símbolos.
@@ -137,6 +139,7 @@ public class IsiScanner {
 	        case 4:
 	            token.setType(Token.TK_NUMBER);
 	            token.setText(term);
+	            addSymbol(term);
 	            tokens.add(token); // Armazena o token.
 	            return token;
 	        case 5:
@@ -145,6 +148,7 @@ public class IsiScanner {
 	            } else {
 	                token.setType(Token.TK_STRING);
 	                token.setText(term);
+	                addSymbol(term);
 	                tokens.add(token); // Armazena o token.
 	                return token;
 	            }
@@ -236,7 +240,8 @@ public class IsiScanner {
 	}
 		public void printTokens() {
 			for (Token token: tokens) {
-				System.out.println(token);
+				 String typeName = getTokenTypeName(token.getType());
+				System.out.printf("Token [type=%s, text='%s']%n", typeName, token.getText());
 			}
 	}
 		public void printSymbolTable() {
@@ -244,4 +249,18 @@ public class IsiScanner {
 				System.out.println(symbol);
 			}
 		}
+		
+		private static String getTokenTypeName(int type) {
+		    return switch (type) {
+		        case 0 -> "IDENTIFICADOR";
+		        case 1 -> "NUMERO";
+		        case 2 -> "OPERADOR_ATRIBUIÇÃO";
+		        case 3 -> "PONTUAÇÃO";
+		        case 5 -> "PALAVRA_RESERVADA";
+		        case 7 -> "DELIMITADOR";
+		        case 8 -> "OPERADOR_ARITIMETICO";
+		        default -> "UNKNOWN";
+		    };
+		}
+
 }
