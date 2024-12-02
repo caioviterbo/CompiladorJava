@@ -12,8 +12,6 @@ public class MainClass {
 			
 			do {
 				token = sc.nextToken();
-				if (token != null) {
-				}
 			} while (token != null);
 			
 			 System.out.println("\n--- LISTA DOS TOKENS ---");
