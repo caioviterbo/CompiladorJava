@@ -10,36 +10,31 @@ import java.util.Map;
 
 import br.com.caio.compiler.exceptions.LexicalException;
 
-// Classe responsável por realizar a análise léxica de um arquivo de texto.
+
 public class IsiScanner {
 
-	// Atributos para armazenar o conteúdo do arquivo, o estado do analisador e a
-	// posição atual.
-	private char[] content; // Conteúdo do arquivo convertido para um array de caracteres.
-	private int status; // Representa o estado atual do analisador léxico (usado no autômato).
-	private int position; // Posição atual do analisador no conteúdo do arquivo.
+
+	private char[] content; 
+	private int status; 
+	private int position; 
 
 	private List<Token> tokens = new ArrayList<>();
 	private Map<String, Symbol> symbolTable = new LinkedHashMap<>();
 	private int symbolOrder = 1;
 	
-	// Construtor que recebe o caminho do arquivo e inicializa o conteúdo.
 	public IsiScanner(String filename) {
 		try {
-			// Lê o conteúdo do arquivo em bytes e converte para uma string usando UTF-8.
 			byte[] bytes = Files.readAllBytes(Paths.get(filename));
 			String txtContent = new String(bytes, StandardCharsets.UTF_8);
-			System.out.println("DEBUG----"); // Exibe o conteúdo do arquivo (para debug).
+			System.out.println("DEBUG----"); 
 			System.out.println(txtContent);
-			content = txtContent.toCharArray(); // Converte o conteúdo em um array de caracteres.
-			position = 0; // Inicializa a posição no início do conteúdo.
+			content = txtContent.toCharArray(); 
+			position = 0; 
 		} catch (Exception ex) {
-			// Trata exceções relacionadas à leitura do arquivo.
 			ex.printStackTrace();
 		}
 	}
 
-	// Método principal que retorna o próximo token encontrado no conteúdo.
 	public Token nextToken() {
 	    char currentChar;
 	    Token token = new Token();
@@ -68,39 +63,39 @@ public class IsiScanner {
 	            } else if (isDelimiter(currentChar)) {
 	                token.setType(Token.TK_DELIMITER);
 	                token.setText(String.valueOf(currentChar));
-	                tokens.add(token); // Armazena o token.
+	                tokens.add(token); 
 	                return token;
 	            } else if (isPunctuation(currentChar)) {
 	                token.setType(Token.TK_PONCTUATION);
 	                token.setText(String.valueOf(currentChar));
-	                tokens.add(token); // Armazena o token.
+	                tokens.add(token); 
 	                return token;
 	            } else if (isOperator(currentChar)) {
 	                char next = nextChar();
 	                if (isComparisonOperator(currentChar, next)) {
 	                    token.setType(Token.TK_COMPARISON_OPERATOR);
 	                    token.setText("" + currentChar + next);
-	                    tokens.add(token); // Armazena o token.
+	                    tokens.add(token); 
 	                    return token;
 	                } else if (isAssignmentOperator(currentChar, next)) {
 	                    token.setType(Token.TK_ASSIGNMENT_OPERATOR);
 	                    token.setText("" + currentChar + next);
-	                    tokens.add(token); // Armazena o token.
+	                    tokens.add(token); 
 	                    return token;
 	                } else if (isArithmeticOperator(currentChar)) {
 	                    token.setType(Token.TK_ARITHMETIC_OPERATOR);
 	                    token.setText(String.valueOf(currentChar));
-	                    tokens.add(token); // Armazena o token.
+	                    tokens.add(token); 
 	                    return token;
 	                } else if (isLogicalOperator(currentChar)) {
 	                    token.setType(Token.TK_LOGICAL_OPERATOR);
 	                    token.setText(String.valueOf(currentChar));
-	                    tokens.add(token); // Armazena o token.
+	                    tokens.add(token); 
 	                    return token;
 	                } else {
 	                    token.setType(Token.TK_OPERATOR);
 	                    token.setText(String.valueOf(currentChar));
-	                    tokens.add(token); // Armazena o token.
+	                    tokens.add(token); 
 	                    return token;
 	                }
 	            }
@@ -121,10 +116,10 @@ public class IsiScanner {
 	                addSymbol(term);
 	            } else {
 	                token.setType(Token.TK_IDENTIFIER);
-	                addSymbol(term); // Adiciona à tabela de símbolos.
+	                addSymbol(term); 
 	            }
 	            token.setText(term);
-	            tokens.add(token); // Armazena o token.
+	            tokens.add(token); 
 	            return token;
 	        case 3:
 	            if (isNumber(currentChar)) {
@@ -140,7 +135,7 @@ public class IsiScanner {
 	            token.setType(Token.TK_NUMBER);
 	            token.setText(term);
 	            addSymbol(term);
-	            tokens.add(token); // Armazena o token.
+	            tokens.add(token); 
 	            return token;
 	        case 5:
 	            if (currentChar != '"') {
@@ -149,7 +144,7 @@ public class IsiScanner {
 	                token.setType(Token.TK_STRING);
 	                token.setText(term);
 	                addSymbol(term);
-	                tokens.add(token); // Armazena o token.
+	                tokens.add(token); 
 	                return token;
 	            }
 	            break;
@@ -158,44 +153,40 @@ public class IsiScanner {
 	}
 
 
-	// Métodos auxiliares para identificar tipos de caracteres.
 	private boolean isNumber(char c) {
-		return c >= '0' && c <= '9'; // Verifica se o caractere é um número.
+		return c >= '0' && c <= '9'; 
 	}
 
 	private boolean isChar(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); // Verifica se é uma letra.
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 	}
 
 	private boolean isOperator(char c) {
 		return c == '>' || c == '<' || c == '=' || c == '!' || c == '+' || c == '-' || c == '*' || c == '/'
-				|| c == '!' || c == '&' ; // Verifica se é um operador.
+				|| c == '!' || c == '&' ; 
 	}
 
-	// Verifica se o operador é de comparação (==, !=, <=, >=)
+	
 	private boolean isComparisonOperator(char currentChar, char nextChar) {
 	    return (currentChar == '=' || currentChar == '!' || currentChar == '<' || currentChar == '>')
 	            && nextChar == '=';
 	}
 
-	// Verifica se o operador é de atribuição (+=, -=, *=, /=)
 	private boolean isAssignmentOperator(char currentChar, char nextChar) {
 	    return (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/')
 	            && nextChar == '=';
 	}
 
-	// Verifica se o operador é aritmético (como +, -, *, /)
 	private boolean isArithmeticOperator(char currentChar) {
 	    return currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/';
 	}
 
-	// Verifica se o operador é lógico (como &&, ||, !)
 	private boolean isLogicalOperator(char currentChar) {
 	    return currentChar == '&' || currentChar == '|' || currentChar == '!';
 	}
 
 	private boolean isSpace(char c) {
-		return c == ' ' || c == '\t' || c == '\n' || c == '\r'; // Verifica se é um espaço ou caractere de controle.
+		return c == ' ' || c == '\t' || c == '\n' || c == '\r'; 
 	}
 
 	private boolean isDelimiter(char c) {
@@ -211,7 +202,6 @@ public class IsiScanner {
 				|| text.equals("System") || text.equals("out") || text.equals("println");
 	}
 
-	// Obtém o próximo caractere do conteúdo e avança a posição.
 	private char nextChar() {
 		if (position < content.length) {
 			return content[position++];
@@ -220,12 +210,11 @@ public class IsiScanner {
 		}
 	}
 
-	// Verifica se o analisador chegou ao final do arquivo.
 	private boolean isEndOfFile() {
 		return position == content.length;
 	}
 
-	// Retrocede uma posição no conteúdo.
+	
 	private void back() {
 		position--;
 	}

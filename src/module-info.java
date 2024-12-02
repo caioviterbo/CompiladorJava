@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author caiog
+ * @author caiog, Abade
  *
  */
 module AnalixadorLexico {

@@ -1,54 +1,53 @@
 package br.com.caio.compiler.lexico;
 
-// Classe que representa um token no contexto de um analisador léxico.
+
 public class Token {
-	// Constantes para representar diferentes tipos de tokens.
-	public static final int TK_IDENTIFIER = 0; // Identificador (ex.: nomes de variáveis)
-	public static final int TK_NUMBER = 1; // Número (ex.: literais numéricos)
-	public static final int TK_OPERATOR = 2; // Operador (ex.: +, -, *, /)
-	public static final int TK_PONCTUATION = 3; // Pontuação (ex.: vírgulas, pontos, etc.)
+
+	public static final int TK_IDENTIFIER = 0; 
+	public static final int TK_NUMBER = 1; 
+	public static final int TK_OPERATOR = 2; 
+	public static final int TK_PONCTUATION = 3; 
 	public static final int TK_RESERVED = 5;
 	public static final int TK_STRING = 6;
 	public static final int TK_DELIMITER = 7;
-	public static final int TK_ARITHMETIC_OPERATOR = 8; // Operador Aritmético (ex.: +, -, *, /)
-	public static final int TK_COMPARISON_OPERATOR = 9; // Operador de Comparação (ex.: ==, !=, <, >)
-	public static final int TK_LOGICAL_OPERATOR = 10;   // Operador Lógico (ex.: &&, ||, !) nao funciona
-	public static final int TK_ASSIGNMENT_OPERATOR = 11; // Operador de Atribuição (ex.: =, +=, -=)
-	public static final int TK_INCREMENT_OPERATOR = 12;  // Operador de Incremento (ex.: ++) nao funciona
-	public static final int TK_DECREMENT_OPERATOR = 13;  // Operador de Decremento (ex.: --) nao funciona
+	public static final int TK_ARITHMETIC_OPERATOR = 8; 
+	public static final int TK_COMPARISON_OPERATOR = 9; 
+	public static final int TK_LOGICAL_OPERATOR = 10;   
+	public static final int TK_ASSIGNMENT_OPERATOR = 11; 
+	public static final int TK_INCREMENT_OPERATOR = 12;  
+	public static final int TK_DECREMENT_OPERATOR = 13; 
 
 	
-	// Atributos que armazenam o tipo do token e o texto associado a ele.
-	private int type; // Representa o tipo do token usando as constantes acima.
-	private String text; // O texto do token (ex.: "var", "42", "+").
+
+	private int type; 
+	private String text; 
 	
-	// Construtor que inicializa um token com o tipo e o texto fornecidos.
+	
 	public Token(int type, String text) { 
-		super(); // Chamada ao construtor da classe base (opcional, neste caso).
-		this.type = type; // Define o tipo do token.
-		this.text = text; // Define o texto do token.
+		super(); 
+		this.type = type; 
+		this.text = text; 
 	}
-	
-	// Construtor padrão (sem parâmetros).
+
 	public Token() {
-		super(); // Chamada ao construtor da classe base.
+		super(); 
 	}
 	
-	// Métodos getter e setter para o atributo `type`.
-	public int getType() { // Retorna o tipo do token.
+	
+	public int getType() { 
 		return type;
 	}
 	
-	public void setType(int type) { // Define o tipo do token.
+	public void setType(int type) { 
 		this.type = type;
 	}
 	
-	// Métodos getter e setter para o atributo `text`.
-	public String getText() { // Retorna o texto do token.
+	
+	public String getText() { 
 		return text;
 	}
 	
-	public void setText(String text) { // Define o texto do token.
+	public void setText(String text) { 
 		this.text = text;
 	}
 	
